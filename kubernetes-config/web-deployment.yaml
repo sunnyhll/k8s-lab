@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: events-website
+  name: events-website
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: events-website
+      ver: v1.0
+  template:
+    metadata:
+      labels:
+        app: events-website
+        ver: v1.0
+    spec:
+      containers:
+        - image: gcr.io/roi-ms-june-u308/events-website:v2.0
+          name: events-website
+          ports:
+          - containerPort: 8080
+          env:
+            - name: SERVER
+              value: "http://events-api-svc:8082"
